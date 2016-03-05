@@ -1,0 +1,137 @@
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+<meta content='Edit photos and images online with Pixastic, an online photo editing application built with JavaScript and the HTML5 canvas element.' name='description'/>
+<meta http-equiv="Content-Language" content="en-us" />
+<meta http-equiv="imagetoolbar" content="no">
+
+<title>Pixastic - Online JavaScript Photo Editor</title>
+<!--
+/*
+ * Pixastic - Online Photo Editing with Javascript and Canvas
+ * Copyright (c) 2008 Jacob Seidelin, cupboy@gmail.com
+ * 
+ *  
+ * Some icons (copy/cut/paste and rotate) have been borrowed from the LGPL 
+ * licensed Crystal Clear icon set (http://commons.wikimedia.org/wiki/Crystal_Clear)
+ * while folder and disk icons are from http://www.ganato.com/.
+ * 
+ */
+-->
+
+<style>
+* {
+	box-sizing: border-box;
+}
+
+a {
+	color : inherit;
+	text-decoration : none;
+	font-weight: bold;
+}
+
+a.underline {
+	text-decoration : underline;
+}
+
+a:hover {
+	text-decoration : underline;
+}
+
+body {
+	background-color : rgb(28,35,46);
+	text-align:center;
+}
+
+div#pixastic {
+	margin: 0 auto;
+	text-align:left;
+	width : 1010;
+	height : 668;
+	overflow:hidden;
+}
+
+</style>
+
+<script type="text/javascript" src="all_zing.min.js"></script>
+
+<!--
+<script type="text/javascript" src="ImageEditor.js"></script>
+<script type="text/javascript" src="NoCanvas.js"></script>
+-->
+<script type="text/javascript" src="pixastic_all.min.js"></script>
+
+
+<script>
+ZING.Event.listen(window, "load", function() {
+	ZING.createEnvironment(document.getElementById("pixastic"), ZING.GUI.Skins.ImageEditor);
+	App = new ZING.Application.StateManager();
+
+	if (ZING.Client.Caps.Canvas2DContext) {
+
+		var oLoading = ZING.getEnvironment().addChildWidget(new ZING.GUI.Label());
+		oLoading.setText("Loading...");
+		oLoading.center();
+
+		function loadPixastic() {
+			var oImgEdit = App.switchState("ImageEditor");
+			ZING.getEnvironment().removeChildWidget(oLoading);
+		}
+
+		var bActLoaded = false;
+		var bToolsLoaded = false;
+
+		var oActSprites = new ZING.GUI.SpriteImage();
+		oActSprites.listen("load", function() {
+			if (bToolsLoaded) {
+				loadPixastic();
+			}
+			bActLoaded = true;
+		});
+		oActSprites.setSource("gfx/actions.jssprite");
+
+		var oToolSprites = new ZING.GUI.SpriteImage();
+		oToolSprites.listen("load", function() {
+			if (bActLoaded) {
+				loadPixastic();
+			}
+			bToolsLoaded = true;
+		});
+		oToolSprites.setSource("gfx/tools.jssprite");
+
+	} else {
+		setTimeout(function() {
+			App.switchState("NoCanvas");
+		},0);
+	}
+});
+</script>
+</head>
+<body>
+
+<noscript>
+
+Sorry, your browser does not appear to have JavaScript enabled. Pixastic is a very ex?peri?mental photo editing ap?plication developed by Jacob Seidelin. It uses only JavaScript and the WHATWG &lt;canvas&gt; element and brow?ser sup?port is currently limi?ted to Firefox, Opera and Safa?ri. 
+<br/><br/>
+Please try again with a JavaScript enabled browser and do visit the blog at <a href="http://blog.nihilogic.dk">blog.nihilogic.dk</a> where you can follow the development of Pixastic and other things. 
+
+</noscript>
+<div id="pixastic"></div>
+
+<div id="sharethis" style="display:none;">
+</div>
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+var pageTracker = _gat._getTracker("UA-3940914-3");
+pageTracker._initData();
+pageTracker._trackPageview();
+</script>
+
+<script src="http://73468.hittail.com/mlt.js" type="text/javascript"></script>
+
+</body>
+</html>
